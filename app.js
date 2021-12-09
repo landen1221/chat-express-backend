@@ -21,11 +21,20 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
     console.log(`User '${socket.id}' connected`);
+
+    socket.on('join_room', (data) => {
+        console.log(`Room data = ${data}`);
+        socket.join(data);
+    });
+
+    socket.on('send_message', (data) => {
+        console.log(`Message data = ${data}`);
+        socket.to(data.room).emit('receive_message', data);
+    });
+
     socket.on('disconnect', () => {
         console.log(`${socket.id} disconnected`);
     });
 });
 
-server.listen(3001, () => {
-    console.log('listening on port 3001');
-});
+module.exports = server;
