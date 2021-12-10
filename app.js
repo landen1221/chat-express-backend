@@ -15,9 +15,31 @@ const io = new Server(server, {
     },
 });
 
-app.get('/', (req, res) => {
+app.get('/:id', (req, res) => {
+    const { id } = req.params;
+    // assignSocketID(id);
     res.send('Hello world');
 });
+
+// const assignSocketID = (socketID) => {
+//     io.on('connection', (socket) => {
+//         console.log(`User '${socket.id}' connected`);
+
+//         socket.on('join_room', (data) => {
+//             console.log(`Room data = ${data}`);
+//             socket.join(data);
+//         });
+
+//         socket.on('send_message', (data) => {
+//             console.log(`Message data = ${data}`);
+//             socket.to(data.room).emit('receive_message', data);
+//         });
+
+//         socket.on('disconnect', () => {
+//             console.log(`${socket.id} disconnected`);
+//         });
+//     });
+// };
 
 io.on('connection', (socket) => {
     console.log(`User '${socket.id}' connected`);
