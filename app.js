@@ -1,4 +1,3 @@
-// create websocket using socket.io
 const express = require('express');
 const cors = require('cors');
 const http = require('http');
@@ -25,7 +24,8 @@ io.on('connection', (socket) => {
 
     socket.on('join_room', (data) => {
         console.log(`Room data = ${data}`);
-        socket.join(data);
+        socket.join(data.room);
+        socket.to(data.room).emit('joined_room', data.user);
     });
 
     socket.on('send_message', (data) => {
